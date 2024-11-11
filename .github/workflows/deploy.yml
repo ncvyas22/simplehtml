@@ -1,0 +1,29 @@
+name: Deploy HTML Page to GitHub Pages
+
+# This specifies that the workflow should trigger on a push to the 'main' branch
+on:
+  push:
+    branches:
+      - main  # Replace 'main' with your default branch if it’s different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Specifies the environment for the job
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v3  # A pre-built action to check out the repository code
+
+      # Step 2: Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'  # Use any stable Node.js version required by GitHub Pages
+
+      # Step 3: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Auth token for the action
+          publish_dir: ./  # Directory where your HTML file is located
